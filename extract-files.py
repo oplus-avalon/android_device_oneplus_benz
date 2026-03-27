@@ -105,6 +105,10 @@ blob_fixups: blob_fixups_user_type = {
         .add_needed('libcodec2_shim.so'),
     'vendor/lib64/vendor.libdpmframework.so': blob_fixup()
         .add_needed('libhidlbase_shim.so'),
+    'odm/lib64/libsharebuffer_impl.so': blob_fixup()
+        .replace_needed('libui.so', 'libui-stock.so'),
+    'vendor/lib64/libui-stock.so': blob_fixup()
+        .replace_needed('android.hardware.graphics.common-V3-ndk.so', 'android.hardware.graphics.common-V7-ndk.so'),
 }  # fmt: skip
 
 module = ExtractUtilsModule(
