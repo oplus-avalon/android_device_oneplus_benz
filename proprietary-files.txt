@@ -2078,6 +2078,9 @@ odm/etc/vintf/manifest/manifest_oplus_charger_aidl.xml
 odm/etc/charge.cfg
 odm/lib64/libGaiaClient_vnd.so
 
+# OPLUS Camera
+odm/lib64/libui.so:vendor/lib64/libui-stock.so;FIX_SONAME
+
 # OPLUS OSense
 odm/lib64/libosenseaidlhalclient.so
 
