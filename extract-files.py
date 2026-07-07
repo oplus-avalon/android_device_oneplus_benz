@@ -117,6 +117,21 @@ blob_fixups: blob_fixups_user_type = {
         .replace_needed('libui.so', 'libui-stock.so'),
     'vendor/lib64/libui-stock.so': blob_fixup()
         .replace_needed('android.hardware.graphics.common-V3-ndk.so', 'android.hardware.graphics.common-V7-ndk.so'),
+    # APS turbo fix: on the port, the camera app's classloader namespace cannot dlopen the /odm
+    # ArcSoft/QNN helper libs (couple-HDR, turbo, QNN HTP), which gates the DSP/QNN path so turbo
+    # can't run. Exposing them as vendor public libraries lets the app namespace resolve them.
+    # benz uses QnnHtpV69Stub (SM7550).
+    'vendor/etc/public.libraries.txt': blob_fixup()
+        .add_line_if_missing('libarcsoft_hdr_couple_api.so')
+        .add_line_if_missing('libarcsoft_high_dynamic_range_couple.so')
+        .add_line_if_missing('libarcsoft_smart_denoise.so')
+        .add_line_if_missing('libarcsoft_turbo_hdr_raw.so')
+        .add_line_if_missing('libarcsoft_turbo_raw.so')
+        .add_line_if_missing('libarcsoft_qnnhtp.so')
+        .add_line_if_missing('libQnnHtp.so')
+        .add_line_if_missing('libQnnSystem.so')
+        .add_line_if_missing('libQnnHtpV69Stub.so')
+        .add_line_if_missing('libQnnGpu.so'),
 }  # fmt: skip
 
 module = ExtractUtilsModule(
